@@ -1,4 +1,6 @@
-##Read the data
+##Read the data and load libraries
+library(ggplot2)
+library(dplyr)
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 

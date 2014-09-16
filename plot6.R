@@ -1,4 +1,6 @@
-##Read the data
+##Read the data and load libraries
+library(ggplot2)
+library(dplyr)
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
@@ -24,12 +26,12 @@ NEItotal$fips <- gsub("24510", "Baltimore City", NEItotal$fips)
 NEItotal$fips <- gsub("06037", "Los Angeles County", NEItotal$fips)
                       
 ##Generate bar plot of total emissions over time with a facet of they cities
-g <- ggplot(NEItotal, aes(x=factor(year), y=Emissions))
-g <- g + geom_bar(stat="identity")
+g <- ggplot(NEItotal, aes(year, Emissions))
+g <- g + geom_line() + geom_smooth(method="lm")
 g <- g + facet_grid(fips  ~ ., scales="free")
 g <- g + ylab(expression("Total Emissions (PM"[2.5]*" in tons)"))
 g <- g + xlab("Year")
-g <- g + ggtitle("Total Annual Emissions from Motor Vehicles: Baltimore City vs. LA County")
+g <- g + ggtitle("Total Annual Emissions from Motor Vehicles")
 g
 
 ##save to png file
